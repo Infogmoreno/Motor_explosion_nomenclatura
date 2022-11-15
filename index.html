@@ -104,14 +104,15 @@
                     animation-mixer="loop: repeat"
                     gltf-model="#animated-asset"
                     class="clickable"
+                    shadow="cast: true; receive: true"
                     gesture-handler
                     visible="true"
                 ></a-entity>
                  <a-entity
                     id="maq-extract"
-                    position="0 -1.5 -1.5"
+                    position="0 -1.5 -2"
                     rotation="0 90 0"      
-                    scale="0.35 0.35 0.35"
+                    scale="0.37 0.37 0.37"
                     animation-mixer="loop: repeat"
                     gltf-model="#maquinaectractora"
                     shadow="cast: true; receive: true"      
@@ -124,7 +125,7 @@
                       position="0 0 0"
                       shadow="cast: false; receive: false"></a-entity>
             <a-entity id="light_directional"
-                      light="type: directional; target: #maq-extract; intensity: 2.1"
+                      light="type: directional; target: #animated-asset; intensity: 2.1"
                       position="1.5 3.9 10"
                       shadow="cast: true; receive: false"></a-entity>
         </a-scene>
