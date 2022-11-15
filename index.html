@@ -103,8 +103,7 @@
                     scale="0.25 0.25 0.25"
                     animation-mixer="loop: repeat"
                     gltf-model="#animated-asset"
-                    class="clickable"
-                    shadow="cast: true; receive: true"
+                    class="clickable"                    
                     gesture-handler
                     visible="true"
                 ></a-entity>
@@ -114,8 +113,7 @@
                     rotation="0 90 0"      
                     scale="0.37 0.37 0.37"
                     animation-mixer="loop: repeat"
-                    gltf-model="#maquinaectractora"
-                    shadow="cast: true; receive: true"      
+                    gltf-model="#maquinaectractora"                       
                     visible="false"
                 ></a-entity>
             </a-marker>
@@ -123,11 +121,11 @@
             <a-entity id="light_ambient"
                       light="type: hemisphere; intensity:0.15"
                       position="0 0 0"
-                      shadow="cast: false; receive: false"></a-entity>
+                      ></a-entity>
             <a-entity id="light_directional"
                       light="type: directional; target: #maquinaectractora; intensity: 2.1"
                       position="1.5 3.9 10"
-                      shadow="cast: true; receive: false"></a-entity>
+                      ></a-entity>
         </a-scene>
         <script type="text/javascript">
              const btn_motor = document.querySelector('#btn_motor');
