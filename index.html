@@ -76,15 +76,14 @@
                    maxCanvasHeight: 1050;"
              webxr="requiredFeatures: hit-test,local-floor;
                 optionalFeatures: dom-overlay,unbounded;
-                overlayElement: #overlay;"     
+                overlayElement: #overlay"     
              >
             
             <a-assets>
                 <a-asset-item
                     id="animated-asset"
                     src="assets/asset.glb"
-                ></a-asset-item>
-            
+                ></a-asset-item>            
                   <a-asset-item
                     id="maquinaectractora"
                     src="assets/extractora_petrolifera.glb"
@@ -99,19 +98,18 @@
                 emitevents="true">
                 <a-entity
                     id="motorexplosion"
-                    position="0 0 -0.5"
+                    position="0 0 -1"
                     scale="0.25 0.25 0.25"
                     animation-mixer="loop: repeat"
                     gltf-model="#animated-asset"
-                    class="clickable"                    
-                    gesture-handler
+                    class="clickable"                   
                     visible="true"
                 ></a-entity>
                  <a-entity
                     id="maq-extract"
                     position="0 -1.5 -1.75"
                     rotation="0 90 0"      
-                    scale="0.35 0.35 0.35"
+                    scale="0.30 0.30 0.30"
                     animation-mixer="loop: repeat"
                     gltf-model="#maquinaectractora"                       
                     visible="false"
