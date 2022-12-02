@@ -2,56 +2,200 @@
 <html>
   <head>
     <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
-    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
     <script src="https://raw.githack.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
+    <script src="RGBELoader.js"></script>
+    <script src="aframe-env-map-component.js"></script>
+    <script src="aframe-hdr-environment.js"></script>
+    <script src="main.js"></script>
+    <script src="ar-cursor.js"></script>
+     <script src="exit-ar-button.js"></script>
+    
+     <script>
+      // WebXR requires HTTPS, so the site doesn't work if someone manually enters
+      // the URL and ends up using HTTP. To work around this, force redirect from
+      // http to https for non-localhost addresses.
+      if (
+        window.location.protocol == "http:" &&
+        window.location.hostname != "localhost" &&
+        window.location.hostname != "127.0.0.1" &&
+        window.location.hostname != "[::1]"
+      ) {
+      }
+       
+        AFRAME.registerComponent("shadow-material", {
+        init: function () {
+          console.log("shadow-material");
+          let el = this.el;
+          let self = this;
+          let mesh = el.getObject3D("mesh");
+          console.log(mesh);
+          if (!mesh) {
+            return;
+          }
+          mesh.material = new THREE.ShadowMaterial();
+          mesh.material.opacity = 0.3;
+        },
+      });
+    </script>
+    <style>
+      body{
+         width: 100%;
+         height: 700px;
+         z-index: 0;
+          }
+
+      #btn_motor{
+            background-color: #B6AF97;
+            opacity:1
+            border: none;
+            color: white;
+            padding: 6px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 10px;
+            font-family:Arial;
+            margin: 15px 15px;
+            cursor: pointer;
+            border-radius: 6px;
+            border: none;
+            }
+          #btn_motor:hover{
+            opacity:0.5;
+          }
+        #btn_extract{
+            background-color: #B6AF97;
+            opacity:1
+            border: none;
+            color: white;
+            padding: 6px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 10px;
+            font-family:Arial;
+            margin: 15px 15px;
+            cursor: pointer;
+            border-radius: 6px;
+            border: none;
+            }
+          #btn_extract:hover{
+            opacity:0.5;
+          }
+      #overlay {
+          display: inline;
+        }
+        /* Show the DOM Overlay element while active (:xr-overlay pseudoclass) */
+        #overlay:xr-overlay {
+          display: inline;
+        }
+
+        #exit-ar {
+          position: fixed;
+          left:25px;
+          bottom: 35px;
+          background: rgba(127, 127, 127, 0.25);
+          color: white;
+          border: 1px solid rgba(255, 255, 255, 0.25);
+          border-radius: 5px;
+          padding: 8px 8px;
+          font-weight: bold;
+          opacity:0.8;
+          z-index: 2;
+        }
+      #exit-ar:hover{
+        opacity: 0.4;
+      }
+    </style>
+    
   </head>
-  <style>
-    body{
-       width: 100%;
-       height: 900px;
-       z-index: 0;
-        }
-    #btn_motor{
-          background-color: #B6AF97;
-          opacity:1
-          border: none;
-          color: white;
-          padding: 6px;
-          text-align: center;
-          text-decoration: none;
-          display: inline-block;
-          font-size: 10px;
-          font-family:Arial;
-          margin: 6px 8px;
-          cursor: pointer;
-          border-radius: 6px;
-          border: none;
-          }
-        #btn_motor:hover{
-          opacity:0.5;
-        }
-      #btn_extract{
-          background-color: #B6AF97;
-          opacity:1
-          border: none;
-          color: white;
-          padding: 6px;
-          text-align: center;
-          text-decoration: none;
-          display: inline-block;
-          font-size: 10px;
-          font-family:Arial;
-          margin: 6px 8px;
-          cursor: pointer;
-          border-radius: 6px;
-          border: none;
-          }
-        #btn_extract:hover{
-          opacity:0.5;
-        }
-  </style>
+
   <body style="margin: 0; overflow: hidden">
+    
+    <a-scene
+      id="scene"
+      vr-mode-ui="enabled: true"
+      embedded
+      renderer="antialias: true;
+                   colorManagement: true;
+                   sortObjects: true;
+                   logarithmicDepthBuffer: true;
+                   physicallyCorrectLights: true;
+                   maxCanvasWidth: 1680;
+                   maxCanvasHeight: 1050;"
+      light="defaultLightsEnabled: false"
+      hdr-environment="url: https://cdn.glitch.global/80433132-eb20-4873-b1e3-2bfedc42bc75/photostudio_07_1k_correg.hdr?v=1668599590463; showBackground: false; showGround: false; groundSize: 15"
+      webxr="requiredFeatures: hit-test,local-floor;
+                optionalFeatures: dom-overlay,unbounded;
+                overlayElement:#overlay;"
+      ar-cursor
+      raycaster="objects: #my-objects *"
+      ar-hit-test="target:#maquinas"
+      shadow="type: pcfsoft"
+    >
+      <a-assets>
+        <a-asset-item
+          id="animated-asset"
+          src="https://cdn.glitch.global/80433132-eb20-4873-b1e3-2bfedc42bc75/Motor_explosion.glb?v=1668626615944"
+          crossorigin="anonymous"
+        ></a-asset-item>
+        <a-asset-item
+          id="maquin"
+          src="https://cdn.glitch.global/80433132-eb20-4873-b1e3-2bfedc42bc75/maquina_extractora.glb?v=1668628281581"
+          crossorigin="anonymous"
+        ></a-asset-item>
+      </a-assets>
+      <a-camera position="0 1.6 0"> </a-camera>
+      <a-entity id="maquinas">
+      <a-entity
+        id="motorexplosion"
+        position="0.2 0.7 -1.3"
+        scale="0.08 0.08 0.08"
+        animation-mixer="loop: repeat"
+        gltf-model="#animated-asset"
+        class="clickable"
+        visible="true"
+        shadow="cast:true; receive: false"
+      ></a-entity>
+      <a-entity
+        id="maq_extract"
+        position="0 0.7 -1.3"
+        rotation="0 90 0"
+        scale="0.08 0.08 0.08"
+        animation-mixer="loop: repeat"
+        gltf-model="#maquin"
+        mixin="#material"
+        visible="false"
+        
+      ></a-entity>
+        <a-plane
+          id="suelo"
+          position="0 0 -1"
+          rotation="-90 0 0"
+          width="8"
+          height="8"
+          material="shader:flat; color:rgb(159, 159, 159); opacity: 0.01"
+          shadow="receive: true"
+          shadow-material
+          ar-shadow-helper="target:#suelo; light: #light_directional;"
+        ></a-plane>
+      <a-entity exit-ar-button="element: #exit-ar"></a-entity>
+      <a-entity
+        id="light_ambient"
+        light="type: hemisphere; intensity:0.1"
+        position="0 0 0"
+      ></a-entity>
+      </a-entity>
+      <a-entity
+        id="light_directional;"
+        light="type: directional; target:#motorexplosion; intensity: 1.6; castShadow: true"
+        position="1.5 8.5 6"
+      ></a-entity>
+    </a-scene>
+    
     <div id="overlay">
+      <button id="exit-ar"
+              exit-ar-button>Exit AR</button>
       <div
         id="botones"
         class="botones"
@@ -61,78 +205,21 @@
           left: 85px;
           width: 100%;
           text-align: center;
-          z-index: 9999;
-        "
-      >
+          z-index: 1;">
         <button id="btn_motor" class="boton" type="button">
           Motor explosión
         </button>
         <button id="btn_extract" class="boton" type="button">
-          Máquina extractora
+         Extractora
         </button>
       </div>
     </div>
-    <a-scene
-      vr-mode-ui="enabled: false;"
-      loading-screen="enabled: false;"
-      arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;"
-      id="scene"
-      embedded
-      renderer="antialias: true;
-                   colorManagement: true;
-                   sortObjects: true;
-                   logarithmicDepthBuffer: true;
-                   physicallyCorrectLights: true;">
-      <a-assets>
-        <a-asset-item id="animated-asset" src="assets/asset.glb"></a-asset-item>
-        <a-asset-item
-          id="maquinaectractora"
-          src="assets/extractora_petrolifera.glb"
-        ></a-asset-item>
-      </a-assets>
-      <a-camera position="0 1.5 0">
-        <a-marker
-          id="animated-marker"
-          type="pattern"
-          preset="hiro"          
-          emitevents="true"
-        >
-          <a-entity
-            id="motorexplosion"
-            position="0 0 -1"
-            scale="0.25 0.25 0.25"
-            animation-mixer="loop: repeat"
-            gltf-model="#animated-asset"
-            class="clickable"
-            visible="true"
-          ></a-entity>
-          <a-entity
-            id="maq-extract"
-            position="0 -1.5 -1.75"
-            rotation="0 90 0"
-            scale="0.30 0.30 0.30"
-            animation-mixer="loop: repeat"
-            gltf-model="#maquinaectractora"
-            visible="true"
-          ></a-entity>
-        </a-marker>
-      </a-camera>
-      <a-entity
-        id="light_ambient"
-        light="type: hemisphere; intensity:0.15"
-        position="0 0 0"
-      ></a-entity>
-      <a-entity
-        id="light_directional"
-        light="type: directional; target:#maquinaectractora; intensity: 2.1"
-        position="1.5 3.5 8"
-      ></a-entity>
-    </a-scene>
+    
     <script type="text/javascript">
       const btn_motor = document.querySelector("#btn_motor");
       const btn_extract = document.querySelector("#btn_extract");
       const motor = document.querySelector("#motorexplosion");
-      const maqu_extract = document.querySelector("#maq-extract");
+      const maqu_extract = document.querySelector("#maq_extract");
 
       btn_motor.addEventListener("mouseenter", function () {
         motor.setAttribute("visible", true);
@@ -143,7 +230,13 @@
         motor.setAttribute("visible", false);
         maqu_extract.setAttribute("visible", true);
       });
+      
+      btn_motor.addEventListener("beforexrselect", (e) => {
+        e.preventDefault();
+      });
+      btn_extract.addEventListener("beforexrselect", (e) => {
+        e.preventDefault();
+      });
     </script>
   </body>
 </html>
-
