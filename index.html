@@ -220,6 +220,7 @@
       const btn_extract = document.querySelector("#btn_extract");
       const motor = document.querySelector("#motorexplosion");
       const maqu_extract = document.querySelector("#maq_extract");
+      const btn_exit_ar = document.querySelector('#exit-ar');
 
       btn_motor.addEventListener("mouseenter", function () {
         motor.setAttribute("visible", true);
@@ -237,6 +238,10 @@
       btn_extract.addEventListener("beforexrselect", (e) => {
         e.preventDefault();
       });
+      btn_exit_ar.addEventListener("beforexrselect", (e) => {
+        e.preventDefault();
+      });
+      
     </script>
   </body>
 </html>
